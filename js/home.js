@@ -173,7 +173,7 @@ async function getTopTrack(timerangenum, limit){
 
     tracks.forEach(track =>{
         const listItem = document.createElement('li');
-        listItem.textContent = track.name;
+        listItem.textContent = track.name + ' par ' + track.artists.map(artist => artist.name).join(', ');
         topArtistsElement.appendChild(listItem);
     })
 
