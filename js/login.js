@@ -11,6 +11,6 @@ function authorize(){
     url += "&response_type=code";
     url += "&redirect_uri=" + encodeURI(redirect);
     url += "&show_dialog=true";
-    url += "&scope=user-library-read";
+    url += "&scope=user-top-read user-library-read playlist-modify-public playlist-modify-private user-library-modify ";
     window.location.href = url;
 }
