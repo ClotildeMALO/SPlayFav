@@ -6,6 +6,7 @@ var client_secret = 'a0bf0575757e47adb7920c676afbc43c';
 var redirect = 'http://localhost:5500/home.html';
 var globalAccessToken = '';
 var totalTracks = 0;
+var countGenre = {};
 
 // Value period
 const VALUES = {
@@ -83,6 +84,8 @@ async function getAllLikedTracks() {
         button.onclick = () => loadLikedTracksPage(i, limit);
         paginationElement.appendChild(button);
     }
+
+    return totalTracks;
 }
 
 // Chargement des titres likés pour une page donnée
@@ -107,17 +110,19 @@ async function loadLikedTracksPage(page, limit) {
         const listItem = document.createElement('li');
         listItem.textContent = track.track.name + ' par ' + track.track.artists.map(artist => artist.name).join(', ');
         tracksListElement.appendChild(listItem);
+        // TO DO stocke les compte pour genre
+
     });
 }
 
-// Creation d'une playlist
+// TO DO Creation d'une playlist
 async function createPlaylist(userid){
     const URL = `${BASE_URL}/users/${userid}/playlists`;
 
 
 }
 
-// Ajout d'un titre à une playlist
+// TO DO Ajout d'un titre à une playlist
 async function addTrackToPlaylist(playlist_id) {
     const URL = `${BASE_URL}/playlists/${playlist_id}/tracks`
 }
@@ -179,6 +184,41 @@ async function getTopTrack(timerangenum, limit){
 
 }
 
+// recuperation des playlists de l'utilisateur
+async function getMyPlaylists(){
+    const response = await fetch(`${BASE_URL}/me/playlists`, {
+        headers: {
+            'Authorization': 'Bearer ' + globalAccessToken
+        }
+    });
+    const data = await response.json();
+    console.log(data);
+    const playlists = data.items;
+
+    const playlistsElement = document.getElementById('myplaylists');
+    playlistsElement.innerHTML = ''; // Vide la liste actuelle
+    playlists.forEach(playlist =>{
+        const listItem = document.createElement('li');
+        listItem.textContent = playlist.name;
+        playlistsElement.appendChild(listItem);
+        const imgItem = document.createElement('img');
+        imgItem.src = playlist.images[0].url;
+        playlistsElement.appendChild(imgItem);
+    })
+}
+
+/// Recuperation des genres possibles
+async function getAvailableGenre(){
+    // Recuperation des genres disponibles
+    const response = await fetch(`${BASE_URL}/recommendations/available-genre-seeds`, {
+        headers: {
+            'Authorization': 'Bearer ' + globalAccessToken
+        }
+    });
+    const data = await response.json();
+    const genres = data.genres;
+
+}
 
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -193,6 +233,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Ajout du nom de l'utilisateur dans le p profilname
         const profileNameElement = document.getElementById('profilname');
         profileNameElement.textContent = `Bonjour ${userProfile.display_name}`;
+        const profilePicElement = document.getElementById('profilpic');
+        profilePicElement.src = userProfile.images[0].url;
+        const profileLinkElement = document.getElementById('profillink');
+        profileLinkElement.href = userProfile.external_urls.spotify;
 
         // Ajout des titres likés dans la liste likedtracks
         const tracksListElement = document.getElementById('likedtracks');
@@ -201,9 +245,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             listItem.textContent = track.track.name + ' par ' + track.track.artists.map(artist => artist.name).join(', '); // le join permet de regrouper si plusieurs artistes
             tracksListElement.appendChild(listItem);
         });
-
-
-
 
     }
 });
