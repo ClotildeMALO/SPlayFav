@@ -86,7 +86,7 @@ button {
     width: 100%;
     padding: 10px;
     background-color: var(--coloraccentuation);
-    color: var(--colortextbutton );;
+    color: var(--colortextbutton);
     border: none; 
     border-radius: 5px;
     font-size: 1.2em;
@@ -96,6 +96,6 @@ button {
 }
 
 button:hover {
-    background-color: var(--coloraccentuationhover);;
+    background-color: var(--coloraccentuationhover);
 }
 
