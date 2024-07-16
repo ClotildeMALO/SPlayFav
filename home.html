@@ -4,20 +4,30 @@
     <title> SPlayMaker | Accueil</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="css/res.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/home.css">
 </head>
 <body>
     <header>
         <h1>SPlayMaker</h1>
-        <h2>Accueil</h2>
+        <div class="trait_dessous"></div>
     </header>
 
-    <img id="profilpic" src="" alt="profil picture" width="100" height="100">
-    <p id="profilname"> </p>
-    <a id="profillink" href="#" target="_blank">Profil Spotify</a>
-    
+    <div id="firstElements">
+        <div id="accueildiv">
+            <h2>Accueil</h2>
+            <img id="profilpic" src="" alt="profil picture" width="100" height="100">
+            <p id="profilname"> </p>
+            <a id="profillink" href="#" target="_blank">Profil Spotify</a>
+        </div>
 
-    <h3>Vos 3 derniers titres likés</h3>
-    <ul id="likedtracks"></ul>
+
+        <div id="firstlikedtrack">
+        <h3>Vos 3 derniers titres likés</h3>
+        <ul id="likedtracks"></ul>
+        </div>
+    </div>
 
     <div id="allLikedTracksdiv">
         <h3>Tous les titres likés</h3>
