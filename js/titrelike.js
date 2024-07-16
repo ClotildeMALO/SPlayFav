@@ -43,23 +43,20 @@ async function getAllLikedTracks() {
         getLikedTrack(0, 1); // permet de MAJ le nombre total de titres likés en demandant le premier titre
     }
 
-    await loadLikedTracksPage(1, limit);// Affichage de la première page
+    var tracksPage = await loadLikedTracksPage(1, limit);// Affichage de la première page
+    affichageLikedTracksPage(tracksPage);
 
     // Création des boutons de pagination
     const paginationElement = document.getElementById('pagination');
     paginationElement.innerHTML = '';
 
 
-
-    const button = document.createElement('button');
-    button.textContent = "<";// TO DOOOOOOO
-
     for (let i = 1; i <= totalPages; i++) {
         const button = document.createElement('button');
         button.textContent = i;
         updateButtonStyles(); // pour 1ere page
-        button.onclick = () =>{
-            loadLikedTracksPage(i, limit); 
+        button.onclick = async () => {
+            affichageLikedTracksPage(await loadLikedTracksPage(i, limit));
             actualPage = i;
             updateButtonStyles();
         }
@@ -67,6 +64,26 @@ async function getAllLikedTracks() {
         buttons.push(button); // Ajoute le bouton à la liste
         paginationElement.appendChild(button);
     }
+
+}
+
+/**
+ * Récupère tous les titres likés dans une liste
+ * @returns {Promise<*>} - Les données de tous les titres likés
+ */
+async function getArrayLikedTracks() {
+    const limit = 50;
+    var totalPages = Math.ceil(totalTracks / limit);// arrondi à l'entier supérieur
+    // Recup tous les titres likés dans liste (tableau de page avec a l'intérieur tableau de promesse avec les titres sous forme de tableau)
+    var allTracks = [];
+    for (let i = 1; i <= totalPages; i++) {
+        allTracks.push(loadLikedTracksPage(i, limit));
+    }
+
+    allTracks = await Promise.all(allTracks); // converti la liste de promesse en liste de données
+    allTracks = allTracks.flat(); // regroupe en une liste de page plutot que plusieurs
+
+    return allTracks;
 }
 
 /**
@@ -87,21 +104,27 @@ function updateButtonStyles() {
  * Chargement et mise en forme des titres likés pour une page donnée
  * @param {* int} page 
  * @param {* int} limit 
+ * @returns {Promise<*>} - Les données des titres likés pour la page
  */
 async function loadLikedTracksPage(page, limit) {
     const offset = (page - 1) * limit;
-
     const tracks = await getLikedTrack(offset, limit);
+    return tracks;
+}
 
+/**
+ * Affichage des titres likés pour les pages
+ * @param {*} tracks données des titres likés
+ */
+async function affichageLikedTracksPage(tracks){
     const tracksListElement = document.getElementById('allLikedTracks');
     tracksListElement.innerHTML = ''; // Vide la liste actuelle
-
     const totalTracksHeader = document.createElement('h3');
     totalTracksHeader.textContent = `Vous avez liké ${totalTracks} titres :`;
     tracksListElement.appendChild(totalTracksHeader);
-    
     affichageListeLikedTrack(tracks, tracksListElement);
 }
+
 
 
 
@@ -140,6 +163,64 @@ function affichageListeImgLikedTrack(likedtracks, elementid) {
 
 }
 
+/**
+ * Exporte les données des titres likés en csv
+ */
+async function exportAllLikedTracks() {
+    // recup les données voulus des titres likés
+    const extractedData = await extractTrackColumns();
+
+    // recup la clé des données
+    const titleKeys = Object.keys(extractedData[0]);
+
+    // regroupe les données en un tableau
+    const refinedData =[];
+    refinedData.push(titleKeys);
+    extractedData.forEach(item => {
+        refinedData.push(Object.values(item));
+    });
+
+    // converti les données en csv
+    let csvContent = ''
+
+    refinedData.forEach(row => {
+    csvContent += row.join(',') + '\n'
+    })
+
+    // télécharge le fichier csv
+    const blob = new Blob([csvContent], { encoding: 'UTF-8', type: 'text/csv;charset=UTF-8;',  });
+    const objUrl = URL.createObjectURL(blob)
+    const link = document.createElement('a');
+    link.id = 'exportallLikedTrack';
+    link.href = objUrl;
+    link.download = 'allLikedTrack.csv';
+    link.textContent ='Exporter tous mes titres likés';
+    const exportDiv= document.getElementById('export');
+    exportDiv.appendChild(link);
+}
+
+
+/**
+ * Récupère les données utiles des titres likés
+ * @returns données extraites des titres likés
+ */
+async function extractTrackColumns() {
+    const likedTracks = await getArrayLikedTracks();
+
+    const extractedData = likedTracks.map(item => {
+        return {
+            track_id : item.track.id,
+            track_name : item.track.name,
+            track_popularity : item.track.popularity,
+            duration_ms : item.track.duration_ms,
+            artist_name : item.track.artists.map(artist => artist.name).join(', '),
+            album_name : item.track.album.name,
+            album_type : item.track.album.album_type,
+            album_total_tracks : item.track.album.total_tracks
+        };
+    });
+    return extractedData;
+}
 
 
 
