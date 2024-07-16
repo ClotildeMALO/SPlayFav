@@ -1,5 +1,7 @@
 
 var totalTracks = 0;
+var actualPage = 1;
+const buttons = [];
 
 /**
  * Recuperation des données des titres likés de l'utilisateur
@@ -46,12 +48,39 @@ async function getAllLikedTracks() {
     // Création des boutons de pagination
     const paginationElement = document.getElementById('pagination');
     paginationElement.innerHTML = '';
+
+
+
+    const button = document.createElement('button');
+    button.textContent = "<";// TO DOOOOOOO
+
     for (let i = 1; i <= totalPages; i++) {
         const button = document.createElement('button');
         button.textContent = i;
-        button.onclick = () => loadLikedTracksPage(i, limit);
+        updateButtonStyles(); // pour 1ere page
+        button.onclick = () =>{
+            loadLikedTracksPage(i, limit); 
+            actualPage = i;
+            updateButtonStyles();
+        }
+
+        buttons.push(button); // Ajoute le bouton à la liste
         paginationElement.appendChild(button);
     }
+}
+
+/**
+ * ! CSS ! Met à jour la classe des boutons pour le bouton de la page actuelle
+ */
+function updateButtonStyles() {
+    buttons.forEach((button, i) => {
+        if (i + 1 === actualPage) {
+            button.style.backgroundColor = "var(--coloractivepage)";
+        } 
+        else {
+            button.style.backgroundColor = "";
+        }
+    });
 }
 
 /**
@@ -84,9 +113,29 @@ async function loadLikedTracksPage(page, limit) {
 function affichageListeLikedTrack(likedtracks, elementid) {
     likedtracks.forEach(track => {
         const listItem = document.createElement('li');
-        listItem.textContent = track.track.name + ' par ' 
-                                + track.track.artists.map(artist => artist.name).join(', '); // le join permet de regrouper si plusieurs artistes
+        listItem.innerHTML = track.track.name + ' par ' 
+                                + track.track.artists.map(artist => artist.name).join(', ')
+                                + '<br/>' + 'Album : ' + track.track.album.name ; // le join permet de regrouper si plusieurs artistes
         elementid.appendChild(listItem);
+    });
+
+}
+
+/**
+ * Met en forme les données des titres likés avec images
+ * @param {*} likedtracks titre likés
+ * @param {*} elementid élément html où l'on va afficher les données
+ */
+function affichageListeImgLikedTrack(likedtracks, elementid) {
+    likedtracks.forEach(track => {
+        const listItem = document.createElement('li');
+        listItem.innerHTML = track.track.name + ' par '
+                                + track.track.artists.map(artist => artist.name).join(', ')
+                                + '<br/>' + 'Album : ' + track.track.album.name; // le join permet de regrouper si plusieurs artistes
+        elementid.appendChild(listItem);
+        const imgItem = document.createElement('img');
+        imgItem.src = track.track.album.images[0].url;
+        elementid.appendChild(imgItem);
     });
 
 }

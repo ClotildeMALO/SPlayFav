@@ -20,7 +20,7 @@ async function affichageBasicProfile(){
     const userProfile = await getUserProfile();
 
     const profileNameElement = document.getElementById('profilname');
-    profileNameElement.textContent = `Bonjour ${userProfile.display_name}`;
+    profileNameElement.textContent = `Bonjour ${userProfile.display_name} !`;
     const profilePicElement = document.getElementById('profilpic');
     if (userProfile.images && userProfile.images.length > 0) {
         profilePicElement.src = userProfile.images[0].url;
