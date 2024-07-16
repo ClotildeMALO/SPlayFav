@@ -14,8 +14,5 @@ document.addEventListener('DOMContentLoaded', async () => {
     const tracksListElement = document.getElementById('likedtracks');
     affichageListeImgLikedTrack(likedTrack, tracksListElement);
 
-       
-        
-
-    
+    exportAllLikedTracks();
 });
