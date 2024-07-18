@@ -4,9 +4,9 @@
 	:root{
         --colorbgbox : rgb(0, 0, 0);
         --colorboxshadow : rgba(65, 64, 64, 0.2);
-        --colorboxshadowhover : rgba(48, 48, 48, 0.2);
-        --coloraccentuation : rgb(110, 22, 192); 
-        --coloraccentuationhover : rgb(72, 18, 122);
+        --colorboxshadowhover : rgba(148, 147, 147, 0.2);
+        --coloraccentuation : rgb(158, 84, 228); 
+        --coloraccentuationhover : rgb(104, 22, 180); 
         --coloractivepage : rgb(192, 22, 178); 
         --colorbodybg : rgb(18, 18, 18);
 		--colorcontrast: whitesmoke;
@@ -20,8 +20,8 @@
         --colorbgbox : #f9f9f9;
         --colorboxshadow : rgba(0, 0, 0, 0.1);
         --colorboxshadowhover : rgba(48, 48, 48, 0.2);
-        --coloraccentuation : rgb(110, 22, 192); 
-        --coloraccentuationhover : rgb(72, 18, 122);
+        --coloraccentuation : rgb(158, 84, 228); 
+        --coloraccentuationhover : rgb(104, 22, 180); 
         --coloractivepage : rgb(192, 22, 178); 
         --colorbodybg : whitesmoke;
 		--colorcontrast: rgb(0, 0, 0);

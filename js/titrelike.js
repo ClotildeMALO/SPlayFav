@@ -117,11 +117,15 @@ async function loadLikedTracksPage(page, limit) {
  * @param {*} tracks données des titres likés
  */
 async function affichageLikedTracksPage(tracks){
+    const totalTracksHeaderContainer = document.getElementById('totalTracksHeaderContainer');
+    totalTracksHeaderContainer.innerHTML = '';
+    const totalTracksHeader = document.createElement('h3');
+    totalTracksHeader.id = 'totalTracksHeader';
+    totalTracksHeader.textContent = `Vous avez liké ${totalTracks} titres :`;
+    totalTracksHeaderContainer.appendChild(totalTracksHeader);
+    
     const tracksListElement = document.getElementById('allLikedTracks');
     tracksListElement.innerHTML = ''; // Vide la liste actuelle
-    const totalTracksHeader = document.createElement('h3');
-    totalTracksHeader.textContent = `Vous avez liké ${totalTracks} titres :`;
-    tracksListElement.appendChild(totalTracksHeader);
     affichageListeLikedTrack(tracks, tracksListElement);
 }
 
@@ -136,9 +140,39 @@ async function affichageLikedTracksPage(tracks){
 function affichageListeLikedTrack(likedtracks, elementid) {
     likedtracks.forEach(track => {
         const listItem = document.createElement('li');
-        listItem.innerHTML = track.track.name + ' par ' 
-                                + track.track.artists.map(artist => artist.name).join(', ')
-                                + '<br/>' + 'Album : ' + track.track.album.name ; // le join permet de regrouper si plusieurs artistes
+
+        const albumImage = document.createElement('img');
+        if (track.track.album.images && track.track.album.images.length > 0) {
+            albumImage.src = track.track.album.images[0]?.url
+        } 
+        else {
+            albumImage.style.display = 'none'; 
+        }
+        albumImage.alt = track.track.album.name;
+
+        const trackInfo = document.createElement('div');
+        trackInfo.className = 'track-info';
+
+        const trackName = document.createElement('a');
+        trackName.href = track.track.external_urls.spotify;
+        trackName.target = '_blank';
+        trackName.textContent = track.track.name;
+
+        const artists = document.createElement('div');
+        artists.className = 'artists';
+        artists.textContent = 'par ' + track.track.artists.map(artist => artist.name).join(', ');
+
+        const album = document.createElement('div');
+        album.className = 'album';
+        album.textContent = 'Album: ' + track.track.album.name;
+
+        trackInfo.appendChild(trackName);
+        trackInfo.appendChild(artists);
+        trackInfo.appendChild(album);
+
+        listItem.appendChild(albumImage);
+        listItem.appendChild(trackInfo);
+
         elementid.appendChild(listItem);
     });
 

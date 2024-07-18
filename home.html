@@ -12,6 +12,7 @@
     <header>
         <h1>SPlayMaker</h1>
         <div class="trait_dessous"></div>
+
     </header>
 
     <div id="firstElements">
@@ -29,18 +30,22 @@
         </div>
     </div>
 
-    <div id="allLikedTracksdiv">
         <h3>Tous les titres likés</h3>
-        <button id="allLikedTrack" onclick="getAllLikedTracks()"> Voir tous mes titres likés </button>
-        <div id="export"></div>
-        <ul id="allLikedTracks"></ul>
+        <div id="likedtracksbuttonsheader">
+            <button id="allLikedTrack" onclick="getAllLikedTracks()"> Voir tous mes titres likés </button>
+            <div id="export"></div>
+        </div>
+    <div id="allLikedTracksdiv">
+
+        <div id="totalTracksHeaderContainer"></div>
+            <ul id="allLikedTracks"></ul>
         <div id="pagination"></div>
     </div>
 
     <div id="topArtistsdiv">
         <h3>Top artistes</h3>
-        <label for="rangeNbArtist">Nombre d'artistes à afficher (de 1 à 15) : </label>
-        <input type="range" id="rangeNbArtist" name="" min="1" max="15" value="5" step="1" oninput="nbArtistsValue.innerText = this.value">
+        <label for="rangeNbArtist">Nombre d'artistes à afficher (de 1 à 50) : </label>
+        <input type="range" id="rangeNbArtist" name="" min="1" max="50" value="5" step="1" oninput="nbArtistsValue.innerText = this.value">
         <p id="nbArtistsValue">5</p>   
         <label for="rangePeriodArtist">Choix de l'intervalle de temps (plus court au plus long): </label>
         <input type="range" id="rangePeriodArtist" name="" min="1" max="3" value="1" step="1">
@@ -50,8 +55,8 @@
 
     <div id="topTracksdiv">
         <h3>Top musique</h3>
-        <label for="rangeNbTracks">Nombre de musiques à afficher (de 1 à 15) : </label>
-        <input type="range" id="rangeNbTracks" name="" min="1" max="15" value="5" step="1" oninput="nbTracksValue.innerText = this.value">
+        <label for="rangeNbTracks">Nombre de musiques à afficher (de 1 à 50) : </label>
+        <input type="range" id="rangeNbTracks" name="" min="1" max="50" value="5" step="1" oninput="nbTracksValue.innerText = this.value">
         <p id="nbTracksValue">5</p>   
 
         <label for="rangePeriodTrack">Choix de l'intervalle de temps (plus court au plus long): </label>
@@ -60,11 +65,13 @@
         <ul id="topTracks"></ul>
     </div> 
 
+
     <div id="actualplaylistdiv">
         <h3>Vos playlists</h3>
         <button id="actualplaylist" onclick="getActualPlaylists()"> Voir vos playlists </button>
         <ul id="actualplaylists"></ul>
 </body>
+
 <script src="js/titrelike.js"></script>
 <script src="js/top.js"></script>
 <script src="js/home.js"></script>
