@@ -28,13 +28,14 @@
     border-radius: 50%;
     margin-bottom: 20px;
 }
-
+/* premiers titres likés */
 #firstElements{
     display: flex;
     flex-direction: row;
     justify-content:space-evenly;
     width: 50%;
     align-items: center;
+    margin-left: 25%;
 
 }
 
@@ -53,7 +54,7 @@
     margin-left: calc(50% - 25px);
 
 }
-
+/* liste premiers titres likés*/
 #likedtracks{
     display: flex;
     flex-direction: column;
@@ -73,10 +74,13 @@
     
 }
 
+/* pagination titre likes*/
 #pagination{
     display: flex;
     flex-direction: row;
     justify-content:space-evenly;
+    margin-right: 10%;
+    margin-left: 10%;
 }
 
 #pagination button{
@@ -89,10 +93,101 @@
     font-size: 12px;
     padding: 1px;
     margin: 3px;
+    width: 100%;
 }
 
 #pagination button:hover {
     background-color: var(--coloraccentuationhover);
 }
+
+
+/* titres likés */
+
+#allLikedTracks{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    flex-direction: row;
+    align-items: center;
+    grid-column-gap: 10px;
+    margin-right: 10%;
+    margin-left: 10%;
+    list-style-type: none;
+    text-align: center;
+}
+
+#allLikedTracks li {
+    background-color: var(--colorbgbox);
+    padding: 20px;
+    padding-top: 10px;
+    border-radius: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px 0 var(--colorboxshadow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#allLikedTracks li:hover{
+    box-shadow: 0 8px 16px 0 var(--colorboxshadowhover);
+}
+
+
+#allLikedTracks img {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 10px;
+}
+
+
+#allLikedTracks a {
+    text-decoration: none;
+    color: var(--coloraccentuation);
+    font-weight: bold;
+}
+
+#allLikedTracks a:hover {
+    color: var(--colortextbutton);
+}
+
+
+#allLikedTracks .album {
+    font-style: italic;
+}
+
+/* Style export lien + bouton tous les titres likés */
+#likedtracksbuttonsheader{
+    display: grid;
+    flex-direction: row;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap:0;
+
+}
+
+#export a {
+    background-color: var(--coloraccentuation);
+    color: var(--colortextbutton);
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    display:inline-block;
+    text-decoration: none;
+    margin: 0;
+    width: 30%;
+    padding: 10px;
+    border: none; 
+    margin-left: 2%;
+}
+
+#export a:hover {
+    background-color: var(--coloraccentuationhover);
+}
+
+#allLikedTrack {
+    padding: 10px 20px;
+    margin-left: 70%;
+}
+
 
 
