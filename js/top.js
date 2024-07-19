@@ -43,11 +43,18 @@ async function getTopArtists(timerangenum, limit){
 function affichageListeArtist(artists, elementid){
     artists.forEach(artist => {
         const listItem = document.createElement('li');
-        listItem.textContent = artist.name;
-        elementid.appendChild(listItem);
+
+        const nameArtist = document.createElement('a');
+        nameArtist.href = artist.external_urls.spotify;
+        nameArtist.target = '_blank';
+        nameArtist.textContent = artist.name;
+        listItem.appendChild(nameArtist);
+
         const imgItem = document.createElement('img');
         imgItem.src = artist.images[0].url;
-        elementid.appendChild(imgItem);
+        listItem.appendChild(imgItem);
+
+        elementid.appendChild(listItem);
     });
 }
 
@@ -88,7 +95,31 @@ async function getTopTrack(timerangenum, limit){
 function affichageListeTracks(tracks, elementid){
     tracks.forEach(track =>{
         const listItem = document.createElement('li');
-        listItem.textContent = track.name + ' par ' + track.artists.map(artist => artist.name).join(', ');
+
+        const imgItem = document.createElement('img');
+        imgItem.src = track.album.images[0].url;
+        listItem.appendChild(imgItem);
+
+        const trackInfo = document.createElement('div');
+        trackInfo.className = 'track-info';
+
+        const nameTrack = document.createElement('a');
+        nameTrack.href = track.external_urls.spotify;
+        nameTrack.target = '_blank';
+        nameTrack.textContent = track.name;
+        trackInfo.appendChild(nameTrack);
+
+        const artists = document.createElement('div');
+        artists.className = 'artists';
+        artists.textContent = 'par ' + track.artists.map(artist => artist.name).join(', ');
+        trackInfo.appendChild(artists);
+
+        const album = document.createElement('div');
+        album.className = 'album';
+        album.textContent = 'Album: ' + track.album.name;
+        trackInfo.appendChild(album);
+
+        listItem.appendChild(trackInfo);
         elementid.appendChild(listItem);
     })
 }

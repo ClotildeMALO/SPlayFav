@@ -1,0 +1,137 @@
+
+#topArtists, #topTracks{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    flex-direction: row;
+    align-items: center;
+    grid-column-gap: 10px;
+    margin-right: 10%;
+    margin-left: 10%;
+    list-style-type: none;
+    text-align: center;
+}
+
+#topArtists li, #topTracks li {
+    background-color: var(--colorbgbox);
+    padding: 20px;
+    padding-top: 10px;
+    border-radius: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px 0 var(--colorboxshadow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#topArtists li:hover, #topTracks li:hover{
+    box-shadow: 0 8px 16px 0 var(--colorboxshadowhover);
+}
+
+
+#topArtists img, #topTracks img {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 10px;
+}
+
+
+#topArtists a, #topTracks a {
+    text-decoration: none;
+    color: var(--coloraccentuation);
+    font-weight: bold;
+}
+
+#topArtists a:hover, #topTracks a:hover {
+    color: var(--colortextbutton);
+}
+
+#topTracks .album {
+    font-style: italic;
+}
+
+/* curseur et boutons*/
+#cursorArtistPeriodiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+}
+
+#cursorArtistNBdiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#cursorArtistNBdiv p{
+    margin-left: 10px;
+    background-color: var(--colorbodybg);
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+#topArtist{
+    margin-left: 35%;
+}
+
+#topArtistsdiv{
+    background-color: var(--colorbgbox);
+    padding: 20px;
+    padding-top: 10px;
+    border-radius: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px 0 var(--colorboxshadow);
+}
+
+#topArtistsdiv:hover{
+    box-shadow: 0 8px 16px 0 var(--colorboxshadowhover);
+}
+
+#topTracksdiv{
+    background-color: var(--colorbgbox);
+    padding: 20px;
+    padding-top: 10px;
+    border-radius: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px 0 var(--colorboxshadow);
+}
+
+#topTracksdiv:hover{
+    box-shadow: 0 8px 16px 0 var(--colorboxshadowhover);
+}
+
+#topTrack{
+    margin-left: 35%;
+}
+
+#cursorTrackPeriodiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+}
+
+#cursorTrackNBdiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#cursorTrackNBdiv p{
+    margin-left: 10px;
+    background-color: var(--colorbodybg);
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: bold;
+}
