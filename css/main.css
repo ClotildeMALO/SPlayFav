@@ -40,7 +40,11 @@ h3{
 }
 
 header{
-    margin:2%;
+
+    position: sticky;
+    top:0;
+    background-color: var(--colorbgbox);
+
 }
 
 p{
@@ -98,6 +102,45 @@ button:hover {
     box-shadow: 0 8px 16px 0 var(--colorboxshadowhover);
     background-color: var(--coloraccentuationhover);
     transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Menu*/
+nav{
+    width: 100%;
+    margin: 0 auto;
+    background-color: var(--colorbgbox);
+    position: sticky;
+    top:0;
+}
+nav ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav li{
+    flex: 1; /* Chaque élément de la liste prend une largeur égale */
+    text-align: center;
+    
+}
+
+nav ul::after{
+    content: "";
+    display: table;
+    clear: both;
+}
+
+nav a {
+    display: block;
+    text-decoration: none;
+    padding: 10px 0px;
+    color : var(--colorcontrast);
+}
+
+nav a:hover {
+    border-bottom: 2px solid var(--coloraccentuationhover);
+    background-color: var(--colorbgbox);
 }
 
 
