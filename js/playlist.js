@@ -26,11 +26,18 @@ async function getActualPlaylists(){
 function affichagePlaylist(playlists, elementid){
     playlists.forEach(playlist =>{
         const listItem = document.createElement('li');
-        listItem.textContent = playlist.name;
+        const namePlaylist = document.createElement('a');
+        namePlaylist.href = playlist.external_urls.spotify;
+        namePlaylist.target = '_blank';
+        namePlaylist.textContent = playlist.name;
+        listItem.appendChild(namePlaylist);
+
+        const imgPlaylist = document.createElement('img');
+        imgPlaylist.alt = playlist.name;
+        imgPlaylist.src = playlist.images[0]?.url;
+        listItem.appendChild(imgPlaylist);
+
         elementid.appendChild(listItem);
-        const imgItem = document.createElement('img');
-        imgItem.src = playlist.images[0].url;
-        elementid.appendChild(imgItem);
     })
 }
 
