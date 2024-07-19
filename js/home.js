@@ -26,9 +26,49 @@ async function getAccessToken(code) {
     });
     const data = await response.json();
     sessionStorage.setItem('token', data.access_token); 
+    sessionStorage.setItem('refresh_token', data.refresh_token);
     return data.access_token;
 }
+/**
+ * Récupération du token d'accès de refresh
+ * @returns token d'accès de refresh
+ */
+async function refreshAccessToken() {
+    const refreshToken = sessionStorage.getItem('refresh_token');
+    let tokenToReturn = null;
+    if (!refreshToken) {
+        console.error('Pas de token refresh disponible');
+    }
 
+    const response = await fetch(TOKEN_URL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Basic ' + btoa(client_id + ':' + client_secret)
+        },
+        body: new URLSearchParams({
+            grant_type: 'refresh_token',
+            refresh_token: refreshToken,
+            client_id: client_id
+        })
+    });
+
+    const data = await response.json();
+    if (data.access_token) {
+        sessionStorage.setItem('token', data.access_token);
+        tokenToReturn = data.access_token;
+    } 
+    else {
+        console.error('Erreur pendant le refresh du token', data);
+    }
+    return tokenToReturn;
+}
+
+function removeTokens(){
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('refresh_token');
+
+}
 
 /**
  * Récupération des genres disponibles
@@ -45,6 +85,7 @@ async function getAvailableGenre(){
     const genres = data.genres;
 
 }
+
 
 
 

@@ -3,7 +3,7 @@
  * @returns informations de l'utilisateur
  */
 async function getUserProfile() {
-    const token = sessionStorage.getItem('token');
+    let token = sessionStorage.getItem('token');
     const response = await fetch(`${BASE_URL}/me`, {
         headers: {
             'Authorization': 'Bearer ' + token
