@@ -13,6 +13,9 @@ const VALUES = {
 async function getTopArtists(timerangenum, limit){
     const token = sessionStorage.getItem('token');
     const timerange = VALUES[timerangenum];
+
+    let timerangeFR = periodeTimeString(timerangenum);
+
     const response = await fetch(`${BASE_URL}/me/top/artists?time_range=${timerange}&limit=${limit}`, {
         headers: {
             'Authorization': 'Bearer ' + token
@@ -25,7 +28,7 @@ async function getTopArtists(timerangenum, limit){
     topArtistsElement.innerHTML = ''; // Vide la liste actuelle
 
     const topArtistsHeader = document.createElement('h3');
-    topArtistsHeader.textContent = `Votre top ${limit} d'artistes (${timerange}):`;
+    topArtistsHeader.textContent = `Votre top ${limit} d'artistes (${timerangeFR}) :`;
     topArtistsElement.appendChild(topArtistsHeader);
 
     affichageListeArtist(top, topArtistsElement);
@@ -56,6 +59,8 @@ function affichageListeArtist(artists, elementid){
 async function getTopTrack(timerangenum, limit){
     const token = sessionStorage.getItem('token');
     const timerange = VALUES[timerangenum];
+
+    let timerangeFR = periodeTimeString(timerangenum);
     const response = await fetch(`${BASE_URL}/me/top/tracks?time_range=${timerange}&limit=${limit}`, {
         headers: {
             'Authorization': 'Bearer ' + token
@@ -68,7 +73,7 @@ async function getTopTrack(timerangenum, limit){
     topArtistsElement.innerHTML = ''; // Vide la liste actuelle
 
     const topArtistsHeader = document.createElement('h3');
-    topArtistsHeader.textContent = `Votre top ${limit} de musiques (${timerange}):`;
+    topArtistsHeader.textContent = `Votre top ${limit} de musiques (${timerangeFR}) :`;
     topArtistsElement.appendChild(topArtistsHeader);
 
     affichageListeTracks(tracks, topArtistsElement);
@@ -88,6 +93,24 @@ function affichageListeTracks(tracks, elementid){
     })
 }
 
+
+function periodeTimeString(periodNum){
+    let timerangeFR = '';
+    switch (periodNum) {
+        case '1':
+            timerangeFR = 'court terme';
+            break;
+        case '2':
+            timerangeFR = 'moyen terme';
+            break;
+        case '3':
+            timerangeFR = 'long terme';
+            break;
+        default:
+            timerangeFR = 'erreur';
+    }
+    return timerangeFR;
+}
 
 
 
