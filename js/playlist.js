@@ -3,6 +3,7 @@
  */
 async function getActualPlaylists(){
     const token = sessionStorage.getItem('token');
+    console.log("getActualPlaylists token : " + token);
     const response = await fetch(`${BASE_URL}/me/playlists`, {
         headers: {
             'Authorization': 'Bearer ' + token

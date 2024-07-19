@@ -15,25 +15,3 @@ function authorize(){
     window.location.href = url;
 }
 
-async function getAccessToken(code) {
-    const response = await fetch(TOKEN_URL, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Authorization': 'Basic ' + btoa(client_id + ':' + client_secret)
-        },
-        body: new URLSearchParams({
-            'grant_type': 'authorization_code',
-            'code': code,
-            'redirect_uri': redirect
-        })
-    });
-
-    const data = await response.json();
-    const token = data.access_token;
-
-    // Stocker le token dans sessionStorage
-    sessionStorage.setItem('token', token);
-
-    return token;
-}
