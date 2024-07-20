@@ -5,6 +5,8 @@ const VALUES = {
     3: "long_term"
 };
 
+let clicTopArtist = false;
+let clicTopTrack = false;
 /**
  * Recuperation du top des artistes
  * @param {* : int} timerangenum période de temps (1 à 3 court à long terme)
@@ -33,7 +35,44 @@ async function getTopArtists(timerangenum, limit){
 
     affichageListeArtist(top, topArtistsElement);
 
+    clicTopArtist = true; // permet d'indiquer si le bouton a été cliqué
+
+    /* changer bouton une fois cliqué*/
+    const rangePeriod = document.getElementById('rangePeriodArtist');
+    const rangeNb = document.getElementById('rangeNbArtist');
+
+    if (rangePeriod.value == timerangenum && rangeNb.value == limit){
+        const button = document.getElementById('topArtist');
+        button.textContent = 'Cacher mon top artiste';
+
+        button.onclick = function(){
+            topArtistsElement.innerHTML = '';
+            clicTopArtist = false;
+            button.textContent = 'Voir mon top artiste';
+            button.onclick = function(){
+                getTopArtists(rangePeriod.value, rangeNb.value);
+            }
+        }
+    }
+
 }
+
+/**
+ * A la modif de valeur des sliders le bouton repasse en voir top artistes
+ * @param {*} timerangenum  période de temps (1 à 3 court à long terme)
+ * @param {*} limit nombre d'artistes à afficher
+ */
+function modifTopArtistRange(timerangenum, limit){
+    if (clicTopArtist){
+        const button = document.getElementById('topArtist');
+        button.textContent = 'Voir mon top artiste';
+        button.onclick = function(){
+            getTopArtists(timerangenum, limit);
+        }
+
+    }
+}
+
 
 /**
  * Met en forme les données des artistes
@@ -44,17 +83,24 @@ function affichageListeArtist(artists, elementid){
     artists.forEach(artist => {
         const listItem = document.createElement('li');
 
+        const numItem = document.createElement('div');
+        numItem.className = 'num-item';
+        numItem.textContent = artists.indexOf(artist) + 1;
+        listItem.appendChild(numItem);
+
+        const imgItem = document.createElement('img');
+        imgItem.src = artist.images[0].url;
+        listItem.appendChild(imgItem);
+
         const nameArtist = document.createElement('a');
         nameArtist.href = artist.external_urls.spotify;
         nameArtist.target = '_blank';
         nameArtist.textContent = artist.name;
         listItem.appendChild(nameArtist);
 
-        const imgItem = document.createElement('img');
-        imgItem.src = artist.images[0].url;
-        listItem.appendChild(imgItem);
-
         elementid.appendChild(listItem);
+
+
     });
 }
 
@@ -85,6 +131,42 @@ async function getTopTrack(timerangenum, limit){
 
     affichageListeTracks(tracks, topArtistsElement);
 
+    clicTopTrack = true; // permet d'indiquer si le bouton a été cliqué
+
+    /* changer bouton une fois cliqué*/
+    const rangePeriod = document.getElementById('rangePeriodTrack');
+    const rangeNb = document.getElementById('rangeNbTracks');
+
+    if (rangePeriod.value == timerangenum && rangeNb.value == limit){
+        const button = document.getElementById('topTrack');
+        button.textContent = 'Cacher mon top musique';
+
+        button.onclick = function(){
+            topArtistsElement.innerHTML = '';
+            clicTopTrack = false;
+            button.textContent = 'Voir mon top musique';
+            button.onclick = function(){
+                getTopTrack(rangePeriod.value, rangeNb.value);
+            }
+        }
+    }
+
+}
+
+/**
+ * A la modif de valeur des sliders le bouton repasse en voir top musique
+ * @param {*} timerangenum  période de temps (1 à 3 court à long terme)
+ * @param {*} limit nombre de musique à afficher
+ */
+function modifTopTrackRange(timerangenum, limit){
+    if (clicTopTrack){
+        const button = document.getElementById('topTrack');
+        button.textContent = 'Voir mon top musique';
+        button.onclick = function(){
+            getTopTrack(timerangenum, limit);
+        }
+
+    }
 }
 
 /**
@@ -95,6 +177,12 @@ async function getTopTrack(timerangenum, limit){
 function affichageListeTracks(tracks, elementid){
     tracks.forEach(track =>{
         const listItem = document.createElement('li');
+
+        const numItem = document.createElement('div');
+        numItem.className = 'num-item';
+        numItem.textContent = tracks.indexOf(track) + 1;
+        listItem.appendChild(numItem);
+
 
         const imgItem = document.createElement('img');
         imgItem.src = track.album.images[0].url;
