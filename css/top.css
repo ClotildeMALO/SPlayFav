@@ -1,14 +1,15 @@
 
 #topArtists, #topTracks{
-    display: grid;
+    display: block;
     grid-template-columns: repeat(2, 1fr);
     flex-direction: row;
     align-items: center;
     grid-column-gap: 10px;
-    margin-right: 10%;
-    margin-left: 10%;
+    margin-right: 20%;
+    margin-left: 20%;
     list-style-type: none;
     text-align: center;
+
 }
 
 #topArtists li, #topTracks li {
@@ -48,6 +49,14 @@
 
 #topTracks .album {
     font-style: italic;
+}
+
+#topArtists .num-item, #topTracks .num-item{
+    font-weight: bold;
+    font-size: 30px;
+    margin-bottom: 10px;
+    color: var(--coloraccentuation);
+
 }
 
 /* curseur et boutons*/
