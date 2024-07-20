@@ -218,11 +218,11 @@ async function exportAllLikedTracks() {
     let csvContent = ''
 
     refinedData.forEach(row => {
-    csvContent += row.join(',') + '\n'
+        csvContent += row.join(';') + '\n'
     })
 
     // télécharge le fichier csv
-    const blob = new Blob([csvContent], { encoding: 'UTF-8', type: 'text/csv;charset=UTF-8;',  });
+    const blob = new Blob(["\ufeff" +csvContent], { encoding: 'UTF-8', type: 'text/csv;charset=UTF-8',  });
     const objUrl = URL.createObjectURL(blob)
     const link = document.createElement('a');
     link.id = 'exportallLikedTrack';
