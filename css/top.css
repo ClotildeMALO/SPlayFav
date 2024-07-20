@@ -32,7 +32,7 @@
 
 #topArtists img, #topTracks img {
     width: 100px;
-    height: 100px;
+    height: auto;
     margin-bottom: 10px;
 }
 
