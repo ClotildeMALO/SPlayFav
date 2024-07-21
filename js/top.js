@@ -217,13 +217,13 @@ function periodeTimeString(periodNum){
     let timerangeFR = '';
     switch (periodNum) {
         case '1':
-            timerangeFR = 'court terme (4 semaines)';
+            timerangeFR = 'Court terme | 4 semaines';
             break;
         case '2':
-            timerangeFR = 'moyen terme (6 mois)';
+            timerangeFR = 'Moyen terme | 6 mois';
             break;
         case '3':
-            timerangeFR = 'long terme (1 an)';
+            timerangeFR = 'Long terme | 1 an';
             break;
         default:
             timerangeFR = 'erreur';
