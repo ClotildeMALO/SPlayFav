@@ -146,3 +146,20 @@ nav a:hover {
 #actual{
     border-bottom: 2px solid var(--coloraccentuationhover);
 }
+
+#up{
+    position:fixed;
+    display: block;
+    right: 1em;
+    bottom: 1em;
+    background-color: var(--coloraccentuation);
+    color: var(--colortextbutton);
+    border: none;
+    width: 2em;
+    font-size: 30px;
+    border-radius: 50%;
+}
+
+#up:hover {
+    background-color: var(--coloraccentuationhover);
+}
