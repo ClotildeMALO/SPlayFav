@@ -40,16 +40,3 @@ function affichagePlaylist(playlists, elementid){
         elementid.appendChild(listItem);
     })
 }
-
-// TO DO Creation d'une playlist
-async function createPlaylist(userid){
-    const URL = `${BASE_URL}/users/${userid}/playlists`;
-
-
-}
-
-// TO DO Ajout d'un titre à une playlist
-async function addTrackToPlaylist(playlist_id) {
-    const URL = `${BASE_URL}/playlists/${playlist_id}/tracks`
-}
-
