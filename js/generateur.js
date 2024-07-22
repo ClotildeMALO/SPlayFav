@@ -69,6 +69,7 @@ async function createPlaylist(tracksUri, name, visibility){
     const dataTrack = await addTracksOnPlaylist(tracksUri, data.id);
     if (dataTrack.snapshot_id != null){
         window.open(data.external_urls.spotify);
+        reinitAfterPlaylistCreate(name);
     }
     else{
         console.error('Erreur pendant l\'ajout des musiques dans la playlist');
@@ -95,4 +96,23 @@ async function addTracksOnPlaylist(tracksUri, playlistId){
     });
     const data = await response.json();
     return data;
+}
+
+
+/**
+ * Réinitialise les champs après la création de la playlist
+ 
+ */
+function reinitAfterPlaylistCreate(namePlaylist){
+    document.getElementById('playlistByTop').style.display = 'none';
+    document.getElementById('playlistName').value = '';
+    document.getElementById('visibilityPublic').checked = true;
+    document.getElementById('rangeNbTracks').value = 5;
+    document.getElementById('rangePeriodTrack').value = 0;
+    document.getElementById('topTracks').innerHTML = '';
+    // ajout message de confirmation
+    const message = document.createElement('p');
+    message.textContent = `Playlist ${namePlaylist} créée avec succès !`;
+    document.getElementById('msgPlaylist').appendChild(message);
+
 }
