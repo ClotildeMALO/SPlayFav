@@ -15,35 +15,18 @@
             <ul>
                 <li><a href="home.html">Accueil</a></li>
                 <li><a href="playlist.html">Playlist</a></li>
-                <li><a href="top.html" id="actual">Top</a></li>
-                <li> <a href="generateur.html"> Générateur</a></li>
+                <li><a href="top.html">Top</a></li>
+                <li> <a href="generateur.html" id="actual"> Générateur</a></li>
                 <li><a href="index.html">Changer de compte</a></li>
             </ul>
         </nav>
     </header>
 
-    <h2>Vos tops</h2>
+    <h2>Générateur de playlist</h2>
     
-    <div id="topArtistsdiv">
-        <h3>Top artistes</h3>
-            <div id="cursorArtistdiv">
-                <div id="cursorArtistNBdiv">
-                    <label for="rangeNbArtist">Nombre d'artistes à afficher (de 1 à 50) : </label>
-                    <input type="range" id="rangeNbArtist" name="" min="1" max="50" value="5" step="1" oninput="nbArtistsValue.innerText = this.value;modifTopArtistRange(rangePeriodArtist.value, rangeNbArtist.value)">
-                    <p id="nbArtistsValue">5</p>   
-                </div>
-                <div id="cursorArtistPeriodiv">
-                    <label for="rangePeriodArtist">Choix de l'intervalle de temps (plus court au plus long): </label>
-                    <input type="range" id="rangePeriodArtist" name="" min="1" max="3" value="1" step="1" oninput="modifTopArtistRange(rangePeriodArtist.value, rangeNbArtist.value)">
-                </div>
-            </div>
-            <button id="topArtist" onclick="getTopArtists(rangePeriodArtist.value, rangeNbArtist.value)"> Voir mon top artiste</button>
-    </div>
-            <ul id="topArtists"></ul>
-
 
     <div id="topTracksdiv">
-        <h3>Top musique</h3>
+        <h3>Générer à partir de mon top musique</h3>
         <div id="cursorTrackdiv">
             <div id="cursorTrackNBdiv">
                 <label for="rangeNbTracks">Nombre de musiques à afficher (de 1 à 50) : </label>
@@ -55,10 +38,15 @@
                 <input type="range" id="rangePeriodTrack" name="" min="1" max="3" value="1" step="1" oninput="modifTopTrackRange(rangePeriodTrack.value, rangeNbTracks.value)">
             </div>
         </div>
-    <button id="topTrack" onclick="getTopTrack(rangePeriodTrack.value, rangeNbTracks.value, 'top')"> Voir mon top musique </button>
+    <button id="topTrack" onclick="getTopTrack(rangePeriodTrack.value, rangeNbTracks.value, 'generateur')"> Voir mon top musique </button>
     </div> 
         <ul id="topTracks"></ul>
 
+    <div id="playlistByTop">
+        <label for="playlistName" hidden>Nom de la playlist : </label>
+        <input type="text" id="playlistName" hidden>
+        <button id="createPlaylistTop" onclick="createPlaylistTop()" hidden> Créer la playlist à partir de mon top musique </button>
+    </div>
 
 
 </body>

@@ -124,6 +124,12 @@ async function affichageLikedTracksPage(tracks){
     totalTracksHeader.textContent = `Vous avez liké ${totalTracks} titres :`;
     totalTracksHeaderContainer.appendChild(totalTracksHeader);
     
+    const link = document.createElement('a');
+    link.href = 'https://open.spotify.com/collection/tracks';
+    link.target = '_blank';
+    link.textContent = 'Voir tous mes titres likés sur Spotify';
+    totalTracksHeaderContainer.appendChild(link);
+
     const tracksListElement = document.getElementById('allLikedTracks');
     tracksListElement.innerHTML = ''; // Vide la liste actuelle
     affichageListeLikedTrack(tracks, tracksListElement);
@@ -179,7 +185,7 @@ function affichageListeLikedTrack(likedtracks, elementid) {
 }
 
 /**
- * Met en forme les données des titres likés avec images
+ * Met en forme les données des titres likés de façon résumé avec images
  * @param {*} likedtracks titre likés
  * @param {*} elementid élément html où l'on va afficher les données
  */
