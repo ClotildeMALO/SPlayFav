@@ -1,21 +1,46 @@
+let clicPlaylist = false;
+
 /**
- * Récupération des playlists de l'utilisateur
+ * Recupère les playlists
+ * @returns playlists de l'utilisateur
  */
-async function getActualPlaylists(){
+async function onlyGetActualPlaylists(){
     const token = sessionStorage.getItem('token');
-    console.log("getActualPlaylists token : " + token);
     const response = await fetch(`${BASE_URL}/me/playlists`, {
         headers: {
             'Authorization': 'Bearer ' + token
         }
     });
     const data = await response.json();
-    console.log(data);
     const playlists = data.items;
+    return playlists;
+}
+
+
+/**
+ * Récupération des playlists de l'utilisateur + affichage
+ */
+async function getActualPlaylists(){
+    const playlists = await onlyGetActualPlaylists();
 
     const playlistsElement = document.getElementById('actualplaylists');
     playlistsElement.innerHTML = ''; // Vide la liste actuelle
     affichagePlaylist(playlists, playlistsElement);
+    
+    clicPlaylist = true;
+
+    if (clicPlaylist){
+        const button = document.getElementById('actualplaylist');
+        button.textContent = 'Cacher mes playlists';
+        button.onclick = function(){
+            playlistsElement.innerHTML = '';
+            clicPlaylist = false;
+            button.textContent = 'Voir mes playlists';
+            button.onclick = function(){
+                getActualPlaylists();
+            }
+        }
+    }
 }
 
 /**
