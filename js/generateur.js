@@ -32,8 +32,6 @@ async function createPlaylistTop(){
         tracksUri.push(track.uri);
     });
 
-    console.log(tracks);
-
     // recupere visibilité de la playlist
     const visibility = document.getElementById('visibilityPublic').checked;
 
@@ -44,7 +42,7 @@ async function createPlaylistTop(){
 
 
 /**
- * Créé la playlist
+ * Créé la playlist et ajoute les musiques dedans
  * @param {*} tracksUri uri des musiques à ajouter
  * @param {*} name nom de playlist
  * @param {*} visibility confidentialité (public ou privée)
@@ -70,12 +68,10 @@ async function createPlaylist(tracksUri, name, visibility){
 
     const dataTrack = await addTracksOnPlaylist(tracksUri, data.id);
     if (dataTrack.snapshot_id != null){
-
         window.open(data.external_urls.spotify);
-        console.log(data.external_urls.spotify);
     }
     else{
-        console.error('Erreur pendant l\'ajout des musiques dans la playlist', dataTrack);
+        console.error('Erreur pendant l\'ajout des musiques dans la playlist');
     }
 
 
@@ -98,6 +94,5 @@ async function addTracksOnPlaylist(tracksUri, playlistId){
         }
     });
     const data = await response.json();
-    console.log(data);
     return data;
 }
