@@ -189,5 +189,13 @@
     margin-left: 70%;
 }
 
+/* nombre titre + lien */
+#totalTracksHeaderContainer{
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+
+}
+
 
 
