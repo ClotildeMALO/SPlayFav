@@ -6,3 +6,12 @@
 #playlistName{
     width: 30%;
 }
+
+#msgPlaylist p{
+    background-color: var(--coloractivepage);
+    color: var(--colortextbutton);
+    padding: 0.5em;
+    border-radius: 0.5em;
+    font-style: italic;
+
+}
