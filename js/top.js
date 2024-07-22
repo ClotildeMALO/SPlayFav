@@ -107,10 +107,10 @@ function affichageListeArtist(artists, elementid){
 /**
  * Récupération du top des musiques
  * @param {*} timerangenum période de temps (1 à 3 court à long terme)
- * @param {*} limit nombre d'artistes à afficher
- * @param {*} clicByPage savoir depuis quelle page on a cliqué
+ * @param {*} limit nombre de musique à afficher
+ * @returns 
  */
-async function getTopTrack(timerangenum, limit, clicByPage){
+async function onlyGetTopTrack(timerangenum, limit){
     const token = sessionStorage.getItem('token');
     const timerange = VALUES[timerangenum];
 
@@ -122,6 +122,20 @@ async function getTopTrack(timerangenum, limit, clicByPage){
     });
     const data = await response.json();
     const tracks = data.items;
+
+    return tracks;
+}
+
+/**
+ * Récupération du top des musiques et début de l'affichage
+ * @param {*} timerangenum période de temps (1 à 3 court à long terme)
+ * @param {*} limit nombre de musiques à afficher
+ * @param {*} clicByPage savoir depuis quelle page on a cliqué
+ */
+async function getTopTrack(timerangenum, limit, clicByPage){
+
+    let timerangeFR = periodeTimeString(timerangenum);
+    const tracks = await onlyGetTopTrack(timerangenum, limit);
 
     const topArtistsElement = document.getElementById('topTracks');
     topArtistsElement.innerHTML = ''; // Vide la liste actuelle
@@ -135,6 +149,7 @@ async function getTopTrack(timerangenum, limit, clicByPage){
     }
     else{
         affichageResumeTracks(tracks, topArtistsElement);
+        makeVisibleTop();
     }
 
     clicTopTrack = true; // permet d'indiquer si le bouton a été cliqué
@@ -183,6 +198,7 @@ function modifTopTrackRange(timerangenum, limit){
 function affichageListeTracks(tracks, elementid){
     tracks.forEach(track =>{
         const listItem = document.createElement('li');
+        listItem.id = "listItemTrack";
 
         const numItem = document.createElement('div');
         numItem.className = 'num-item';
@@ -225,7 +241,6 @@ function affichageListeTracks(tracks, elementid){
  */
 function affichageResumeTracks(tracks, elementid){
     tracks.forEach(track =>{
-        
         const listItem = document.createElement('li');
         listItem.innerHTML = track.name + ' par ' 
                                 + track.artists.map(artist => artist.name).join(', ')

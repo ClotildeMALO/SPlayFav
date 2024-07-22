@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="css/res.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/top.css">
+    <link rel="stylesheet" href="css/generateur.css">
+
 </head>
 <body>
     <header>
@@ -29,7 +31,7 @@
         <h3>Générer à partir de mon top musique</h3>
         <div id="cursorTrackdiv">
             <div id="cursorTrackNBdiv">
-                <label for="rangeNbTracks">Nombre de musiques à afficher (de 1 à 50) : </label>
+                <label for="rangeNbTracks">Nombre de musiques souhaitées (de 1 à 50) : </label>
                 <input type="range" id="rangeNbTracks" name="" min="1" max="50" value="5" step="1" oninput="nbTracksValue.innerText = this.value;modifTopTrackRange(rangePeriodTrack.value, rangeNbTracks.value)">
                 <p id="nbTracksValue">5</p>   
             </div>
@@ -42,16 +44,26 @@
     </div> 
         <ul id="topTracks"></ul>
 
-    <div id="playlistByTop">
-        <label for="playlistName" hidden>Nom de la playlist : </label>
-        <input type="text" id="playlistName" hidden>
-        <button id="createPlaylistTop" onclick="createPlaylistTop()" hidden> Créer la playlist à partir de mon top musique </button>
+    <div id="playlistByTop" hidden>
+        <label  for="playlistName" >Nom de la playlist : </label>
+        <input type="text" id="playlistName" >
+        <fieldset id="visibilityPlaylist">
+            <legend>Confidentialité de la playlist :</legend>
+          
+            <input type="radio" id="visibilityPrive" name="visibility" value="prive">
+            <label for="visibilityPrive"> Privée </label>
+            <input type="radio" id="visibilityPublic" name="visibility" value="public" checked="checked">
+            <label for="visibilityPublic"> Publique </label>
+        </fieldset>
+
+        <button id="createPlaylistTop" onclick="createPlaylistTop()" > Créer la playlist à partir de mon top musique </button>
     </div>
 
 
 </body>
 
 <script src="js/top.js"></script>
+<script src="js/generateur.js"></script>
 <script src="js/home.js"></script>
 <script src="js/user.js"></script>
 <script src="js/load.js"></script>
