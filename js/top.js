@@ -108,8 +108,9 @@ function affichageListeArtist(artists, elementid){
  * Récupération du top des musiques
  * @param {*} timerangenum période de temps (1 à 3 court à long terme)
  * @param {*} limit nombre d'artistes à afficher
+ * @param {*} clicByPage savoir depuis quelle page on a cliqué
  */
-async function getTopTrack(timerangenum, limit){
+async function getTopTrack(timerangenum, limit, clicByPage){
     const token = sessionStorage.getItem('token');
     const timerange = VALUES[timerangenum];
 
@@ -129,7 +130,12 @@ async function getTopTrack(timerangenum, limit){
     topArtistsHeader.textContent = `Votre top ${limit} de musiques (${timerangeFR}) :`;
     topArtistsElement.appendChild(topArtistsHeader);
 
-    affichageListeTracks(tracks, topArtistsElement);
+    if (clicByPage == 'top'){
+        affichageListeTracks(tracks, topArtistsElement);
+    }
+    else{
+        affichageResumeTracks(tracks, topArtistsElement);
+    }
 
     clicTopTrack = true; // permet d'indiquer si le bouton a été cliqué
 
@@ -146,7 +152,7 @@ async function getTopTrack(timerangenum, limit){
             clicTopTrack = false;
             button.textContent = 'Voir mon top musique';
             button.onclick = function(){
-                getTopTrack(rangePeriod.value, rangeNb.value);
+                getTopTrack(rangePeriod.value, rangeNb.value, clicByPage);
             }
         }
     }
@@ -209,6 +215,23 @@ function affichageListeTracks(tracks, elementid){
 
         listItem.appendChild(trackInfo);
         elementid.appendChild(listItem);
+    })
+}
+
+/**
+ * Met en forme les données des musiques de façon résumé
+ * @param {*} tracks liste de musique
+ * @param {*} elementid élément html où l'on va afficher les données
+ */
+function affichageResumeTracks(tracks, elementid){
+    tracks.forEach(track =>{
+        
+        const listItem = document.createElement('li');
+        listItem.innerHTML = track.name + ' par ' 
+                                + track.artists.map(artist => artist.name).join(', ')
+                                + '<br/>' + 'Album : ' + track.album.name ; 
+        elementid.appendChild(listItem);
+
     })
 }
 
