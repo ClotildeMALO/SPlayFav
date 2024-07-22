@@ -7,7 +7,7 @@ const buttons = [];
  * Recuperation des données des titres likés de l'utilisateur
  * @returns {Promise<*>} - Les données des titres likés
  */
-async function getLikedTrack(offset, limit) {
+async function onlyGetLikedTrack(offset, limit) {
     const token = sessionStorage.getItem('token');
     const response = await fetch(`${BASE_URL}/me/tracks?market=FR&limit=${limit}&offset=${offset}`, {
         headers: {
@@ -40,7 +40,7 @@ async function getAllLikedTracks() {
         totalPages = Math.ceil(totalTracks / limit);// arrondi à l'entier supérieur
     }
     else{
-        getLikedTrack(0, 1); // permet de MAJ le nombre total de titres likés en demandant le premier titre
+        onlyGetLikedTrack(0, 1); // permet de MAJ le nombre total de titres likés en demandant le premier titre
     }
 
     var tracksPage = await loadLikedTracksPage(1, limit);// Affichage de la première page
@@ -108,7 +108,7 @@ function updateButtonStyles() {
  */
 async function loadLikedTracksPage(page, limit) {
     const offset = (page - 1) * limit;
-    const tracks = await getLikedTrack(offset, limit);
+    const tracks = await onlyGetLikedTrack(offset, limit);
     return tracks;
 }
 

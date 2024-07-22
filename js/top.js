@@ -7,16 +7,17 @@ const VALUES = {
 
 let clicTopArtist = false;
 let clicTopTrack = false;
+
+
 /**
- * Recuperation du top des artistes
- * @param {* : int} timerangenum période de temps (1 à 3 court à long terme)
- * @param {* : int} limit nombre d'artistes à afficher
+ * Récupération du top des artistes
+ * @param {*} timerangenum période de temps (1 à 3 court à long terme)
+ * @param {*} limit nombre d'artistes à afficher
+ * @returns 
  */
-async function getTopArtists(timerangenum, limit){
+async function onlyGetTopArtists(timerangenum, limit){
     const token = sessionStorage.getItem('token');
     const timerange = VALUES[timerangenum];
-
-    let timerangeFR = periodeTimeString(timerangenum);
 
     const response = await fetch(`${BASE_URL}/me/top/artists?time_range=${timerange}&limit=${limit}`, {
         headers: {
@@ -25,6 +26,20 @@ async function getTopArtists(timerangenum, limit){
     });
     const data = await response.json();
     const top = data.items;
+
+    return top;
+}
+
+
+/**
+ * Recuperation du top des artistes et début de l'affichage
+ * @param {* : int} timerangenum période de temps (1 à 3 court à long terme)
+ * @param {* : int} limit nombre d'artistes à afficher
+ */
+async function getTopArtists(timerangenum, limit){
+    let timerangeFR = periodeTimeString(timerangenum);
+
+    const top = await onlyGetTopArtists(timerangenum, limit);
 
     const topArtistsElement = document.getElementById('topArtists');
     topArtistsElement.innerHTML = ''; // Vide la liste actuelle
