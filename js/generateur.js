@@ -201,10 +201,12 @@ function reinitAfterPlaylistCreate(namePlaylist){
     document.getElementById('playlistName').value = '';
     document.getElementById('visibilityPublic').checked = true;
     document.getElementById('rangeNbTracks').value = 5;
+    document.getElementById('nbTracksValue').value = 5;
     document.getElementById('rangePeriodTrack').value = 0;
     document.getElementById('topTracks').innerHTML = '';
 
     document.getElementById('limitReco').value = 5;
+    document.getElementById('limitRecoValue').value= 5;
     document.getElementById('recoTracks').innerHTML = '';
     document.getElementById('typePlaylistTop').checked = true;
 
@@ -212,6 +214,9 @@ function reinitAfterPlaylistCreate(namePlaylist){
     const message = document.createElement('p');
     message.textContent = `Playlist ${namePlaylist} créée avec succès !`;
     document.getElementById('msgPlaylist').appendChild(message);
+
+
+    window.scrollTo(0, 0);
 
 }
 
