@@ -26,6 +26,7 @@
 
     <h2>Générateur de playlist</h2>
     <div id="msgPlaylist"></div>
+    <p> A partir de ce générateur vous pouvez créer une playlist avec votre top de musiques ou faire une playlist avec des recommandations faites à partir de celle-ci.</p>
 
     <div id="topTracksdiv">
         <h3>Générer à partir de mon top musique</h3>
@@ -42,10 +43,26 @@
         </div>
     <button id="topTrack" onclick="getTopTrack(rangePeriodTrack.value, rangeNbTracks.value, 'generateur')"> Voir mon top musique </button>
     </div> 
-        <ul id="topTracks"></ul>
+     <ul id="topTracks"></ul>
+
+
+    <div id="playlistRecodiv">
+        <h3> Afficher des recommandations à partir de mon top</h3>
+        <p> Ces recommandations sont basés sur les limites et la période défini pour le top de musique. 
+            <br> Il est seulement possible de prendre en compte 5 musiques pour établir des recommandations, si votre limite était supérieur, 5 d'entre elles seront choisies aléatoirement.</p>
+        <div id="cursorRecoNBdiv">
+            <label for="limitReco">Nombre de recommandations souhaitées (de 1 à 50) : </label>
+            <input type="range" id="limitReco" name="" min="1" max="50" value="5" step="1" oninput="limitRecoValue.innerText = this.value">
+            <p id="limitRecoValue">5</p>
+        </div>
+        <button id="affichePlaylistReco" onclick="affichageRecommandation(limitReco.value)"> Voir mes recommandations </button>
+    </div>
+    <ul id="recoTracks"></ul>
+
 
     <div id="playlistByTop" hidden>
-        <label  for="playlistName" >Nom de la playlist : </label>
+        <h3> Création de la playlist</h3>
+        <label  for="playlistName" id="playlistNameLabel" >Nom de la playlist : </label>
         <input type="text" id="playlistName" >
         <fieldset id="visibilityPlaylist">
             <legend>Confidentialité de la playlist :</legend>
@@ -56,7 +73,17 @@
             <label for="visibilityPublic"> Publique </label>
         </fieldset>
 
-        <button id="createPlaylistTop" onclick="createPlaylistTop()" > Créer la playlist à partir de mon top musique </button>
+        <fieldset id="typePlaylist">
+            <legend>Type de playlist souhaitée :</legend>
+            <input type="radio" id="typePlaylistTop" name="typePlaylist" value="top" checked="checked">
+            <label for="typePlaylistTop"> Top musique </label>
+            <input type="radio" id="typePlaylistReco" name="typePlaylist" value="reco">
+            <label for="typePlaylistReco"> Recommandations </label>
+            <input type="radio" id="typePlaylistMix" name="typePlaylist" value="mix">
+            <label for="typePlaylistMix"> Mix des deux </label>
+        </fieldset>
+
+        <button id="createPlaylistTop" onclick="createPlaylistByType()" > Créer la playlist souhaitée</button>
     </div>
     <button id="up">⭡</button>
 
