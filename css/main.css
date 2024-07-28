@@ -149,7 +149,7 @@ nav a:hover {
 
 #up{
     position:fixed;
-    display: block;
+    display: none;
     right: 1em;
     bottom: 1em;
     background-color: var(--coloraccentuation);
