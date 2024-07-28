@@ -22,7 +22,7 @@ async function createPlaylistTop(){
     const namePlaylist = document.getElementById('playlistName');
     if (namePlaylist.value == ''){
         const timeRangeString = periodeTimeString(timerange);
-        namePlaylist.value = `Top ${limit} musiques ${timeRangeString}`;
+        namePlaylist.value = `Top ${limit} musiques (${timeRangeString})`;
     }
 
     // recupere les uri des musiques du top
@@ -74,9 +74,11 @@ async function createPlaylistReco(){
         tracksUri.push(track.uri);
     });
 
+    const day = getDateTimeNow();
+
     const namePlaylist = document.getElementById('playlistName');
     if (namePlaylist.value == ''){
-        namePlaylist.value = `Playlist recommandée selon top`;
+        namePlaylist.value = `Recommandations selon top du ${day}`;
     }
 
     const visibility = document.getElementById('visibilityPublic').checked; 
@@ -105,9 +107,12 @@ async function createPlaylistMix(){
         tracksUri.push(track.uri);
     });
 
+    const day = getDateTimeNow();
+
+
     const namePlaylist = document.getElementById('playlistName');
     if (namePlaylist.value == ''){
-        namePlaylist.value = `Playlist mix top et recommandations`;
+        namePlaylist.value = `Mix top ${limitTop} et recommandations du ${day}`;
     }
 
     const visibility = document.getElementById('visibilityPublic').checked; 
@@ -115,7 +120,18 @@ async function createPlaylistMix(){
     createPlaylist(tracksUri, namePlaylist.value, visibility);
 }
 
-
+/**
+ * Recupère la date du jour au format FR
+ * @returns date du jour au format FR
+ */
+function getDateTimeNow(){
+    const dtNow = new Date(); 
+    const day = dtNow.getDate();
+    const month = dtNow.getMonth()+1;
+    const year = dtNow.getFullYear();
+    const dtFR = `${day}/${month}/${year}`;
+    return dtFR;
+}
 
 
 /**
