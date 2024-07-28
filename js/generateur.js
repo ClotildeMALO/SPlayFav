@@ -1,3 +1,4 @@
+clicReco = false;
 /**
  * Fonction qui permet de rendre visible la div playlistByTop et gère un peu son CSS
  */
@@ -253,6 +254,21 @@ async function affichageRecommandation(limit){
 
     affichageListeTracks(tracksReco, recommandationElement, 'générateur');
     makeVisibleTop();
+
+    clicReco = true;
+
+    if (clicReco){
+        const button = document.getElementById('affichePlaylistReco');
+        button.textContent = 'Cacher mes recommandations';
+        button.onclick = function(){
+            recommandationElement.innerHTML = '';
+            clicReco = false;
+            button.textContent = 'Voir mes recommandations';
+            button.onclick = function(){
+                affichageRecommandation(limit);
+            }
+        }
+    }
 
 
 }
