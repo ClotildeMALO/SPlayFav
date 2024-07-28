@@ -160,7 +160,7 @@ async function getTopTrack(timerangenum, limit, clicByPage){
     topArtistsElement.appendChild(topArtistsHeader);
 
     if (clicByPage == 'top'){
-        affichageListeTracks(tracks, topArtistsElement);
+        affichageListeTracks(tracks, topArtistsElement, clicByPage);
     }
     else{
         affichageResumeTracks(tracks, topArtistsElement);
@@ -209,17 +209,19 @@ function modifTopTrackRange(timerangenum, limit){
  * Met en forme les données des musiques
  * @param {*} tracks liste de musique
  * @param {*} elementid élément html où l'on va afficher les données
+ * @param {*} clicByPage savoir depuis quelle page on a cliqué
  */
-function affichageListeTracks(tracks, elementid){
+function affichageListeTracks(tracks, elementid, clicByPage){
     tracks.forEach(track =>{
         const listItem = document.createElement('li');
         listItem.id = "listItemTrack";
 
-        const numItem = document.createElement('div');
-        numItem.className = 'num-item';
-        numItem.textContent = tracks.indexOf(track) + 1;
-        listItem.appendChild(numItem);
-
+        if (clicByPage == 'top'){
+            const numItem = document.createElement('div');
+            numItem.className = 'num-item';
+            numItem.textContent = tracks.indexOf(track) + 1;
+            listItem.appendChild(numItem);
+        }
 
         const imgItem = document.createElement('img');
         imgItem.src = track.album.images[0].url;

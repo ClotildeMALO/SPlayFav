@@ -1,10 +1,19 @@
-#visibilityPlaylist{
+fieldset{
     margin-top: 1em;
     border: none;
 }
 
+fieldset legend, #playlistNameLabel {
+    font-weight: bold;
+    font-size: 1em;
+    color: var(--coloraccentuation);
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+
 #playlistName{
-    width: 30%;
+    width: auto;
 }
 
 #msgPlaylist p{
@@ -14,4 +23,90 @@
     border-radius: 0.5em;
     font-style: italic;
 
+}
+
+#playlistRecodiv{
+    background-color: var(--colorbgbox);
+    padding: 20px;
+    padding-top: 10px;
+    border-radius: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px 0 var(--colorboxshadow);
+}
+
+#playlistRecodiv:hover{
+    box-shadow: 0 8px 16px 0 var(--colorboxshadowhover);
+}
+
+#affichePlaylistReco{
+    margin-left: 35%;
+}
+#cursorRecoNBdiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#cursorRecoNBdiv p{
+    margin-left: 10px;
+    background-color: var(--colorbodybg);
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+
+#recoTracks{
+    display: block;
+    grid-template-columns: repeat(2, 1fr);
+    flex-direction: row;
+    align-items: center;
+    grid-column-gap: 10px;
+    margin-right: 20%;
+    margin-left: 20%;
+    list-style-type: none;
+    text-align: center;
+
+}
+
+#recoTracks li{
+    background-color: var(--colorbgbox);
+    padding: 20px;
+    padding-top: 10px;
+    border-radius: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px 0 var(--colorboxshadow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#recoTracks li:hover{
+    box-shadow: 0 8px 16px 0 var(--colorboxshadowhover);
+}
+
+
+#recoTracks img{
+    width: 100px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+
+#recoTracks a{
+    text-decoration: none;
+    color: var(--coloraccentuation);
+    font-weight: bold;
+}
+
+#recoTracks a:hover {
+    color: var(--colortextbutton);
+}
+
+#recoTracks .album {
+    font-style: italic;
 }
