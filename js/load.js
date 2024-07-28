@@ -31,11 +31,20 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 
-document.querySelector('#up')
-	.addEventListener('click', function (e) {
-  	window.scrollTo({
+document.querySelector('#up').addEventListener('click', function () 
+{
+  	window.scrollTo
+    ({
         top: 0,
         left:0,
         behavior: 'smooth'
     });
-  })
+})
+
+window.addEventListener('scroll', function () {
+    if (window.scrollY > 100) {
+        document.querySelector('#up').style.display = 'block';
+    } else {
+        document.querySelector('#up').style.display = 'none';
+    }
+});
