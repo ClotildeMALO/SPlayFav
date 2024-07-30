@@ -227,8 +227,25 @@ function reinitAfterPlaylistCreate(namePlaylist){
  * @param {*} limit nombre de recommandations
  * @returns musiques recommandées
  */
-async function getRecommandation(limit){
+async function getRecommandation(limit, idtracks){
     const market = 'FR';
+    // Recupere les musiques recommandées
+    let token = sessionStorage.getItem('token');
+    const response = await fetch(`${BASE_URL}/recommendations?limit=${limit}&market=${market}&seed_tracks=${idtracks}`, {
+        method: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + token
+        }
+    });
+    const data = await response.json();
+    return data.tracks;
+}
+
+/**
+ * Recupère les musiques du top selon le timerange et la limite affiché sur la page
+ * @returns id des musiques du top séparé par des virgules
+ */
+async function getTopId(){
     // Recupere les musiques du top à partir des éléments de la page
     const timerangeTop = document.getElementById('rangePeriodTrack').value;
     const limitTop = document.getElementById('rangeNbTracks').value;
@@ -247,24 +264,17 @@ async function getRecommandation(limit){
 
     let topId = tracksTop.map(track => track.id).join(',');
 
-    // Recupere les musiques recommandées
-    let token = sessionStorage.getItem('token');
-    const response = await fetch(`${BASE_URL}/recommendations?limit=${limit}&market=${market}&seed_tracks=${topId}`, {
-        method: 'GET',
-        headers: {
-            'Authorization': 'Bearer ' + token
-        }
-    });
-    const data = await response.json();
-    return data.tracks;
+    return topId;
 }
+
 
 /**
  * Affiche les recommandations de musiques
  * @param {*} limit limite de recommandations
  */
 async function affichageRecommandation(limit){
-    const tracksReco = await getRecommandation(limit);
+    const topId = await getTopId();
+    const tracksReco = await getRecommandation(limit, topId);
     const recommandationElement = document.getElementById('recoTracks');
     recommandationElement.innerHTML = ''; // Vide la liste actuelle
 
