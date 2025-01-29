@@ -25,7 +25,7 @@ fieldset legend, #playlistNameLabel {
 
 }
 
-#playlistRecodiv{
+#playlistRecodiv, #playlistRecoAleatTracks{
     background-color: var(--colorbgbox);
     padding: 20px;
     padding-top: 10px;
@@ -35,11 +35,11 @@ fieldset legend, #playlistNameLabel {
     box-shadow: 0 4px 8px 0 var(--colorboxshadow);
 }
 
-#playlistRecodiv:hover{
+#playlistRecodiv:hover, #playlistRecoAleatTracks:hover{
     box-shadow: 0 8px 16px 0 var(--colorboxshadowhover);
 }
 
-#affichePlaylistReco{
+#affichePlaylistReco, #affichePlaylistRecoTracksAleat{
     margin-left: 35%;
 }
 #cursorRecoNBdiv{
@@ -59,7 +59,7 @@ fieldset legend, #playlistNameLabel {
 }
 
 
-#recoTracks{
+#recoTracks, #recoTracksAleat{
     display: block;
     grid-template-columns: repeat(2, 1fr);
     flex-direction: row;
@@ -72,7 +72,7 @@ fieldset legend, #playlistNameLabel {
 
 }
 
-#recoTracks li{
+#recoTracks li, #recoTracksAleat li{
     background-color: var(--colorbgbox);
     padding: 20px;
     padding-top: 10px;
@@ -85,12 +85,12 @@ fieldset legend, #playlistNameLabel {
     align-items: center;
 }
 
-#recoTracks li:hover{
+#recoTracks li:hover, #recoTracksAleat li:hover{
     box-shadow: 0 8px 16px 0 var(--colorboxshadowhover);
 }
 
 
-#recoTracks img{
+#recoTracks img, #recoTracksAleat img{
     width: 100px;
     height: auto;
     margin-bottom: 10px;
@@ -109,4 +109,20 @@ fieldset legend, #playlistNameLabel {
 
 #recoTracks .album {
     font-style: italic;
+}
+
+#typeAleat{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin : 20px;
+    margin-bottom: 0;
+}
+
+#trait{
+    width: 50%;
+    border: 1px solid var(--coloraccentuation);
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 25%;
 }

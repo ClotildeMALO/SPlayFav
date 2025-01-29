@@ -262,5 +262,25 @@ async function extractTrackColumns() {
     return extractedData;
 }
 
+/**
+ * Affichage de liste d'artistes : seulement le nom avec lien
+ * @param {*} artists liste d'artistes
+ * @param {*} element élément html où l'on va afficher les données
+ */
+function affichageListeArtistResume(artists, element){
+   
+    artists.forEach(artist => {
+        const listItem = document.createElement('li');
+        const artistName = document.createElement('a');
+        artistName.href = artist.external_urls.spotify;
+        artistName.target = '_blank';
+        artistName.textContent = artist.name;
+        listItem.appendChild(artistName);
+        element.appendChild(listItem);
+    });
+
+
+}
+
 
 

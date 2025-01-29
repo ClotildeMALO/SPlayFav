@@ -26,7 +26,7 @@ async function onlyGetTopArtists(timerangenum, limit){
     });
     const data = await response.json();
     const top = data.items;
-
+    
     return top;
 }
 
