@@ -1,4 +1,5 @@
-clicReco = false;
+clicRecoByTop = false;
+clicRecoByLike = false;
 /**
  * Fonction qui permet de rendre visible la div playlistByTop et gère un peu son CSS
  */
@@ -9,6 +10,17 @@ function makeVisibleTop(){
     divPlaylistByTop.style.justifyContent = 'center';
     divPlaylistByTop.style.alignItems = 'center';
 
+}
+
+/**
+ * Permet de rendre visible la div playlistByRecoAleat et gère un peu son CSS
+ */
+function makeVisibleReco(){
+    const divplaylistByRecoAleat = document.getElementById('playlistByRecoAleat');
+    divplaylistByRecoAleat.style.display = 'flex';
+    divplaylistByRecoAleat.style.flexDirection = 'column';
+    divplaylistByRecoAleat.style.justifyContent = 'center';
+    divplaylistByRecoAleat.style.alignItems = 'center';
 }
 
 /**
@@ -45,7 +57,6 @@ async function createPlaylistTop(){
  */
 function createPlaylistByType(){
     const typeChecked = document.querySelectorAll('input[name="typePlaylist"]:checked');
-    console.log(typeChecked[0].value);
 
     switch (typeChecked[0].value){
         case 'top':
@@ -269,10 +280,10 @@ async function getTopId(){
 
 
 /**
- * Affiche les recommandations de musiques
+ * Affiche les recommandations de musiques selon le top musique
  * @param {*} limit limite de recommandations
  */
-async function affichageRecommandation(limit){
+async function affichageRecommandationByTop(limit){
     const topId = await getTopId();
     const tracksReco = await getRecommandation(limit, topId);
     const recommandationElement = document.getElementById('recoTracks');
@@ -286,20 +297,108 @@ async function affichageRecommandation(limit){
     affichageListeTracks(tracksReco, recommandationElement, 'générateur');
     makeVisibleTop();
 
-    clicReco = true;
+    clicRecoByTop = true;
 
-    if (clicReco){
+    if (clicRecoByTop){
         const button = document.getElementById('affichePlaylistReco');
         button.textContent = 'Cacher mes recommandations';
         button.onclick = function(){
             recommandationElement.innerHTML = '';
-            clicReco = false;
+            clicRecoByTop = false;
             button.textContent = 'Voir mes recommandations';
             button.onclick = function(){
                 affichageRecommandation(limit);
             }
         }
     }
+}
+
+/**
+ * Récupère les musiques likées
+ * @param {*} limit nombre de musiques / artistes souhaités
+ * @param {*} type type de recommandation souhaité (musiques ou artistes)
+ * @returns musiques / artistes aléatoires dans les titres likés
+ */
+async function getAleatFromLike(limit, type){
+    let tracks = await getArrayLikedTracks();
+
+    const aleatItems = [];
+    if (type == 'musiques'){
+        for (let i = 0; i < limit; i++){
+            let aleat = Math.floor(Math.random() * tracks.length);
+            aleatItems.push(tracks[aleat]);
+        }
+    }
+    else if (type == 'artistes'){
+        const artists = [];
+        tracks.forEach(track => {
+            artists.push(track.track.artists[0]);
+        });
+        for (let i = 0; i < limit; i++){
+            let aleat = Math.floor(Math.random() * artists.length);
+            aleatItems.push(artists[aleat]);
+        }
+    }
+    else {
+        console.error('Type de recommandation souhaité inconnu');
+    }
+
+    return aleatItems;
+}
 
 
+/**
+ * Affiche les recommandations de musiques selon les musiques likées
+ * @param {*} limit limite de recommandations
+ */
+async function affichageRecommandationByLike(limit){
+    const limitAleat = 5;
+    const type = document.querySelectorAll('input[name="typeAleat"]:checked');
+    const tracksBase = await getAleatFromLike(limitAleat, type[0].value);
+
+    const tracksAleatElement = document.getElementById('tracksAleat');
+    tracksAleatElement.innerHTML = ''; // Vide la liste actuelle
+
+    const tracksAleatHeader = document.createElement('h3');
+    tracksAleatHeader.textContent = `Mes ${limitAleat} ${type[0].value} aléatoires :`;
+    tracksAleatElement.appendChild(tracksAleatHeader);
+
+
+    console.log(tracksBase);
+
+    if (type[0].value == 'musiques'){
+        affichageListeLikedTrack(tracksBase, tracksAleatElement);
+    }
+    else if (type[0].value == 'artistes'){
+        affichageListeArtistResume(tracksBase, tracksAleatElement);
+    }
+
+    // MARCHE PAS ENCORE A MODIF /!\
+    const tracksReco = await getRecommandation(limit, tracksBase);
+    console.log(tracksReco);
+
+    const recommandationElement = document.getElementById('recoTracksAleat');
+    recommandationElement.innerHTML = ''; // Vide la liste actuelle
+
+    const recommandationHeader = document.createElement('h3');
+    recommandationHeader.textContent = `Mes ${limit} recommandations de musiques :`;
+    recommandationElement.appendChild(recommandationHeader);
+
+    affichageListeLikedTrack(tracksReco, recommandationElement);
+    makeVisibleReco();
+
+    clicRecoByLike = true;
+
+    if (clicRecoByLike){
+        const button = document.getElementById('affichePlaylistReco');
+        button.textContent = 'Cacher mes recommandations';
+        button.onclick = function(){
+            recommandationElement.innerHTML = '';
+            clicRecoByLike = false;
+            button.textContent = 'Voir mes recommandations';
+            button.onclick = function(){
+                affichageRecommandation(limit);
+            }
+        }
+    }
 }
