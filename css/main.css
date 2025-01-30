@@ -9,12 +9,13 @@ body{
     color:var(--colorcontrast);
 }
 
-h1{
+h1, h1 a{
     text-align:center;
     text-transform: uppercase;
     color:var(--coloraccentuation);
     font-weight: bold;
     font-size:60px;
+    text-decoration: none;
 }
 
 .trait_dessous
