@@ -164,36 +164,3 @@ async function getTopId(){
 
     return topId;
 }
-
-/**
- * Récupère les musiques likées (aléatoirement)
- * @param {*} limit nombre de musiques / artistes souhaités
- * @param {*} type type de recommandation souhaité (musiques ou artistes)
- * @returns musiques / artistes aléatoires dans les titres likés
- */
-async function getAleatFromLike(limit, type){
-    let tracks = await getArrayLikedTracks();
-
-    const aleatItems = [];
-    if (type == 'musiques'){
-        for (let i = 0; i < limit; i++){
-            let aleat = Math.floor(Math.random() * tracks.length);
-            aleatItems.push(tracks[aleat]);
-        }
-    }
-    else if (type == 'artistes'){
-        const artists = [];
-        tracks.forEach(track => {
-            artists.push(track.track.artists[0]);
-        });
-        for (let i = 0; i < limit; i++){
-            let aleat = Math.floor(Math.random() * artists.length);
-            aleatItems.push(artists[aleat]);
-        }
-    }
-    else {
-        console.error('Type de recommandation souhaité inconnu');
-    }
-
-    return aleatItems;
-}
