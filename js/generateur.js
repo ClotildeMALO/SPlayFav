@@ -1,5 +1,3 @@
-clicRecoByTop = false;
-clicRecoByLike = false;
 /**
  * Fonction qui permet de rendre visible la div playlistByTop et gère un peu son CSS
  */
@@ -10,17 +8,6 @@ function makeVisibleTop(){
     divPlaylistByTop.style.justifyContent = 'center';
     divPlaylistByTop.style.alignItems = 'center';
 
-}
-
-/**
- * Permet de rendre visible la div playlistByRecoAleat et gère un peu son CSS
- */
-function makeVisibleReco(){
-    const divplaylistByRecoAleat = document.getElementById('playlistByRecoAleat');
-    divplaylistByRecoAleat.style.display = 'flex';
-    divplaylistByRecoAleat.style.flexDirection = 'column';
-    divplaylistByRecoAleat.style.justifyContent = 'center';
-    divplaylistByRecoAleat.style.alignItems = 'center';
 }
 
 /**
@@ -50,85 +37,6 @@ async function createPlaylistTop(){
     // creation de la playlist
     createPlaylist(tracksUri, namePlaylist.value, visibility);
     
-}
-
-/**
- * Création d'une playlist selon le type de playlist choisi
- */
-function createPlaylistByType(){
-    const typeChecked = document.querySelectorAll('input[name="typePlaylist"]:checked');
-
-    switch (typeChecked[0].value){
-        case 'top':
-            createPlaylistTop();
-            break;
-        case 'reco':
-            createPlaylistReco();
-            break;
-        case 'mix':
-            createPlaylistMix();
-            break;
-
-        default:
-            console.error('Type de playlist inconnu');
-    }  
-}
-
-/**
- * Création d'une playlist selon les recommandations
- */
-async function createPlaylistReco(){
-    const limit = document.getElementById('limitReco').value;
-    const tracksUri = [];
-    const tracks = await getRecommandation(limit);
-    tracks.forEach(track => {
-        tracksUri.push(track.uri);
-    });
-
-    const day = getDateTimeNow();
-
-    const namePlaylist = document.getElementById('playlistName');
-    if (namePlaylist.value == ''){
-        namePlaylist.value = `Recommandations selon top du ${day}`;
-    }
-
-    const visibility = document.getElementById('visibilityPublic').checked; 
-
-    createPlaylist(tracksUri, namePlaylist.value, visibility);
-}
-
-/**
- * Création d'une playlist mixant top et recommandations
- */
-async function createPlaylistMix(){
-    const limit = parseInt(document.getElementById('rangeNbTracks').value) + parseInt(document.getElementById('limitReco').value);
-    const limitReco = document.getElementById('limitReco').value;
-
-    const limitTop = document.getElementById('rangeNbTracks').value;
-    const timerange = document.getElementById('rangePeriodTrack').value;
-
-    const tracksUri = [];
-    const tracksTop = await onlyGetTopTrack(timerange, limitTop);
-    tracksTop.forEach(track => {
-        tracksUri.push(track.uri);
-    });
-
-    const tracksReco = await getRecommandation(limitReco);
-    tracksReco.forEach(track => {
-        tracksUri.push(track.uri);
-    });
-
-    const day = getDateTimeNow();
-
-
-    const namePlaylist = document.getElementById('playlistName');
-    if (namePlaylist.value == ''){
-        namePlaylist.value = `Mix top ${limitTop} et recommandations du ${day}`;
-    }
-
-    const visibility = document.getElementById('visibilityPublic').checked; 
-
-    createPlaylist(tracksUri, namePlaylist.value, visibility);
 }
 
 /**
@@ -205,7 +113,6 @@ async function addTracksOnPlaylist(tracksUri, playlistId){
 
 /**
  * Réinitialise les champs après la création de la playlist
- 
  */
 function reinitAfterPlaylistCreate(namePlaylist){
     document.getElementById('playlistByTop').style.display = 'none';
@@ -233,26 +140,6 @@ function reinitAfterPlaylistCreate(namePlaylist){
 
 
 /**
- * Récupère les recommandations de musiques selon top musique sur la page (marché FR)
- * @param {*} type type de recommandation (topTrack ou topArtist)
- * @param {*} limit nombre de recommandations
- * @returns musiques recommandées
- */
-async function getRecommandation(limit, idtracks){
-    const market = 'FR';
-    // Recupere les musiques recommandées
-    let token = sessionStorage.getItem('token');
-    const response = await fetch(`${BASE_URL}/recommendations?limit=${limit}&market=${market}&seed_tracks=${idtracks}`, {
-        method: 'GET',
-        headers: {
-            'Authorization': 'Bearer ' + token
-        }
-    });
-    const data = await response.json();
-    return data.tracks;
-}
-
-/**
  * Recupère les musiques du top selon le timerange et la limite affiché sur la page
  * @returns id des musiques du top séparé par des virgules
  */
@@ -278,43 +165,8 @@ async function getTopId(){
     return topId;
 }
 
-
 /**
- * Affiche les recommandations de musiques selon le top musique
- * @param {*} limit limite de recommandations
- */
-async function affichageRecommandationByTop(limit){
-    const topId = await getTopId();
-    const tracksReco = await getRecommandation(limit, topId);
-    const recommandationElement = document.getElementById('recoTracks');
-    recommandationElement.innerHTML = ''; // Vide la liste actuelle
-
-    const recommandationHeader = document.createElement('h3');
-    recommandationHeader.textContent = `Mes ${limit} recommandations de musiques :`;
-    recommandationElement.appendChild(recommandationHeader);
-    console.log(tracksReco);
-
-    affichageListeTracks(tracksReco, recommandationElement, 'générateur');
-    makeVisibleTop();
-
-    clicRecoByTop = true;
-
-    if (clicRecoByTop){
-        const button = document.getElementById('affichePlaylistReco');
-        button.textContent = 'Cacher mes recommandations';
-        button.onclick = function(){
-            recommandationElement.innerHTML = '';
-            clicRecoByTop = false;
-            button.textContent = 'Voir mes recommandations';
-            button.onclick = function(){
-                affichageRecommandation(limit);
-            }
-        }
-    }
-}
-
-/**
- * Récupère les musiques likées
+ * Récupère les musiques likées (aléatoirement)
  * @param {*} limit nombre de musiques / artistes souhaités
  * @param {*} type type de recommandation souhaité (musiques ou artistes)
  * @returns musiques / artistes aléatoires dans les titres likés
@@ -344,61 +196,4 @@ async function getAleatFromLike(limit, type){
     }
 
     return aleatItems;
-}
-
-
-/**
- * Affiche les recommandations de musiques selon les musiques likées
- * @param {*} limit limite de recommandations
- */
-async function affichageRecommandationByLike(limit){
-    const limitAleat = 5;
-    const type = document.querySelectorAll('input[name="typeAleat"]:checked');
-    const tracksBase = await getAleatFromLike(limitAleat, type[0].value);
-
-    const tracksAleatElement = document.getElementById('tracksAleat');
-    tracksAleatElement.innerHTML = ''; // Vide la liste actuelle
-
-    const tracksAleatHeader = document.createElement('h3');
-    tracksAleatHeader.textContent = `Mes ${limitAleat} ${type[0].value} aléatoires :`;
-    tracksAleatElement.appendChild(tracksAleatHeader);
-
-
-    console.log(tracksBase);
-
-    if (type[0].value == 'musiques'){
-        affichageListeLikedTrack(tracksBase, tracksAleatElement);
-    }
-    else if (type[0].value == 'artistes'){
-        affichageListeArtistResume(tracksBase, tracksAleatElement);
-    }
-
-    // MARCHE PAS ENCORE A MODIF /!\
-    const tracksReco = await getRecommandation(limit, tracksBase);
-    console.log(tracksReco);
-
-    const recommandationElement = document.getElementById('recoTracksAleat');
-    recommandationElement.innerHTML = ''; // Vide la liste actuelle
-
-    const recommandationHeader = document.createElement('h3');
-    recommandationHeader.textContent = `Mes ${limit} recommandations de musiques :`;
-    recommandationElement.appendChild(recommandationHeader);
-
-    affichageListeLikedTrack(tracksReco, recommandationElement);
-    makeVisibleReco();
-
-    clicRecoByLike = true;
-
-    if (clicRecoByLike){
-        const button = document.getElementById('affichePlaylistReco');
-        button.textContent = 'Cacher mes recommandations';
-        button.onclick = function(){
-            recommandationElement.innerHTML = '';
-            clicRecoByLike = false;
-            button.textContent = 'Voir mes recommandations';
-            button.onclick = function(){
-                affichageRecommandation(limit);
-            }
-        }
-    }
 }
