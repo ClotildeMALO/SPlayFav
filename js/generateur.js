@@ -82,6 +82,13 @@ async function createPlaylist(tracksUri, name, visibility){
     if (dataTrack.snapshot_id != null){
         window.open(data.external_urls.spotify);
         reinitAfterPlaylistCreate(name);
+
+        // Affichage message de succès
+        const message = document.createElement('p');
+        message.textContent = `Playlist ${name} créée avec succès !`;
+        document.getElementById('msgPlaylist').appendChild(message);
+        window.scrollTo(0,0);
+
     }
     else{
         console.error('Erreur pendant l\'ajout des musiques dans la playlist');
