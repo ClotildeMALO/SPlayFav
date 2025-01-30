@@ -81,7 +81,6 @@ async function createPlaylist(tracksUri, name, visibility){
     const dataTrack = await addTracksOnPlaylist(tracksUri, data.id);
     if (dataTrack.snapshot_id != null){
         window.open(data.external_urls.spotify);
-        reinitAfterPlaylistCreate(name);
 
         // Affichage message de succès
         const message = document.createElement('p');
@@ -119,9 +118,9 @@ async function addTracksOnPlaylist(tracksUri, playlistId){
 
 
 /**
- * Réinitialise les champs après la création de la playlist
+ * Réinitialise les champs
  */
-function reinitAfterPlaylistCreate(namePlaylist){
+function reinit(namePlaylist){
     document.getElementById('playlistByTop').style.display = 'none';
     document.getElementById('playlistName').value = '';
     document.getElementById('visibilityPublic').checked = true;
@@ -130,19 +129,16 @@ function reinitAfterPlaylistCreate(namePlaylist){
     document.getElementById('rangePeriodTrack').value = 0;
     document.getElementById('topTracks').innerHTML = '';
 
-    document.getElementById('limitReco').value = 5;
-    document.getElementById('limitRecoValue').value= 5;
-    document.getElementById('recoTracks').innerHTML = '';
-    document.getElementById('typePlaylistTop').checked = true;
+    const button = document.getElementById('topTrack');
+    console.log(button.textContent);
+    console.log(button.id);
 
-    // ajout message de confirmation
-    const message = document.createElement('p');
-    message.textContent = `Playlist ${namePlaylist} créée avec succès !`;
-    document.getElementById('msgPlaylist').appendChild(message);
-
-
-    window.scrollTo(0, 0);
-
+    button.innerHTML = '';
+    clicTopArtist = false;
+    button.textContent = 'Voir mon top musique';
+    button.onclick = function(){
+        getTopTrack(document.getElementById('rangePeriodTrack').value, document.getElementById('rangeNbTracks').value, 'generateur')
+    }
 }
 
 
