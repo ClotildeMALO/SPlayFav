@@ -126,6 +126,7 @@ function reinit(namePlaylist){
     document.getElementById('visibilityPublic').checked = true;
     document.getElementById('rangeNbTracks').value = 5;
     document.getElementById('nbTracksValue').value = 5;
+    document.getElementById('nbTracksValue').innerText = 5;
     document.getElementById('rangePeriodTrack').value = 0;
     document.getElementById('topTracks').innerHTML = '';
 
