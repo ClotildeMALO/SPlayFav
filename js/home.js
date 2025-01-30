@@ -70,22 +70,6 @@ function removeTokens(){
 
 }
 
-/**
- * Récupération des genres disponibles
- */
-async function getAvailableGenre(){
-    const token = sessionStorage.getItem('token');
-    // Recuperation des genres disponibles
-    const response = await fetch(`${BASE_URL}/recommendations/available-genre-seeds`, {
-        headers: {
-            'Authorization': 'Bearer ' + token
-        }
-    });
-    const data = await response.json();
-    const genres = data.genres;
-
-}
-
 
 
 
