@@ -140,6 +140,8 @@ function reinit(namePlaylist){
     button.onclick = function(){
         getTopTrack(document.getElementById('rangePeriodTrack').value, document.getElementById('rangeNbTracks').value, 'generateur')
     }
+
+    document.getElementById('msgPlaylist').innerHTML = '';
 }
 
 
