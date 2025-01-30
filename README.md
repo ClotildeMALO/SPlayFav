@@ -19,4 +19,6 @@ Le tout en utilisant l'API Spotify.
    - Choix du nom de la playlist avec nom par défaut si l'on ne choisit rien = Top {nombre musique} musiques ({intervalle de temps})
    - Choix de la confidentialité de la playlist : publique ou privée
 
+Mode clair et mode sombre selon le thème choisi dans notre système.
+
 -> Tout est fonctionnel au 30/01/25
