@@ -126,3 +126,17 @@ fieldset legend, #playlistNameLabel {
     margin-bottom: 20px;
     margin-left: 25%;
 }
+
+#buttonsLine{
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#reinitialiser{
+    padding-left: 10;
+    padding-right: 10;
+    width:fit-content;
+
+}
