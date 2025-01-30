@@ -18,9 +18,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
     
-
-
-    
     affichageBasicProfile();
 
     const likedTrack = await onlyGetLikedTrack(0, 3); // 3 derniers titres likés
