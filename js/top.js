@@ -182,7 +182,7 @@ async function getTopTrack(timerangenum, limit, clicByPage){
             clicTopTrack = false;
             button.textContent = 'Voir mon top musique';
             button.onclick = function(){
-                getTopTrack(rangePeriod.value, rangeNb.value, clicByPage);
+                getTopTrack(rangePeriod.value, rangeNb.value, 'top');
             }
         }
     }
@@ -194,12 +194,12 @@ async function getTopTrack(timerangenum, limit, clicByPage){
  * @param {*} timerangenum  période de temps (1 à 3 court à long terme)
  * @param {*} limit nombre de musique à afficher
  */
-function modifTopTrackRange(timerangenum, limit){
+function modifTopTrackRange(timerangenum, limit, clicByPage){
     if (clicTopTrack){
         const button = document.getElementById('topTrack');
         button.textContent = 'Voir mon top musique';
         button.onclick = function(){
-            getTopTrack(timerangenum, limit);
+            getTopTrack(timerangenum, limit, clicByPage);
         }
 
     }
