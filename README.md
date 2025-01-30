@@ -1,4 +1,5 @@
 Création d'un site qui récupère les données utilisateurs de Spotify (connexion via Spotify) et permet d'afficher ses données et générer une playlist à partir d'un top musique.
+Le tout en utilisant l'API Spotify.
 
 # Fonctionnalités 
 - Récupération des 3 derniers titres likés
@@ -17,3 +18,5 @@ Création d'un site qui récupère les données utilisateurs de Spotify (connexi
    - Choix de l'intervalle de temps que l'on prend en compte pour le top (court terme = 4 semaines, moyen terme = 6 mois, long terme = 1 an)
    - Choix du nom de la playlist avec nom par défaut si l'on ne choisit rien = Top {nombre musique} musiques ({intervalle de temps})
    - Choix de la confidentialité de la playlist : publique ou privée
+
+-> Tout est fonctionnel au 30/01/25
