@@ -1,9 +1,8 @@
 const AUTHORIZE = 'https://accounts.spotify.com/authorize';
 
-var client_id = '9189e6080d5b41e4b2f4c12db928cb9c';
-var client_secret = 'a0bf0575757e47adb7920c676afbc43c';
-var redirect = 'http://localhost:5500/home.html';
-
+const client_id = spotifyConfig.client_id;
+const client_secret = spotifyConfig.client_secret;
+const redirect = spotifyConfig.redirect;
 
 function authorize(){
     let url = AUTHORIZE;
