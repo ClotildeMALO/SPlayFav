@@ -1,10 +1,9 @@
 const TOKEN_URL = 'https://accounts.spotify.com/api/token';
 const BASE_URL = 'https://api.spotify.com/v1';
 
-
-var client_id = '***REMOVED***';
-var client_secret = '***REMOVED***';
-var redirect = 'http://localhost:5500/home.html';
+const client_id = spotifyConfig.client_id;
+const client_secret = spotifyConfig.client_secret;
+const redirect = spotifyConfig.redirect;
 
 /**
  * Récupération du token d'accès
